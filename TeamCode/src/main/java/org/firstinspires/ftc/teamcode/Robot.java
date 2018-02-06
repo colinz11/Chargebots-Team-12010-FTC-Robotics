@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.CRServoImpl;
+import com.qualcomm.robotcore.hardware.CRServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,11 +14,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Robot
 {
-
     private static final double drivePower = 0.75;
     private static final double K = 0.5;
-
-
     /* Public OpMode members. */
     public DcMotor motorLeftFront = null;
     public DcMotor motorRightFront = null;
@@ -27,13 +26,10 @@ public class Robot
     public Servo leftClaw;
     public Servo rightClaw;
     public Servo jewel;
-    public CRServo relicWrist;
+    public Servo relicWrist;
     public Servo relicClaw;
-
-
     /* local OpMode members. */
     private HardwareMap hardwareMap = null;
-
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
@@ -49,7 +45,7 @@ public class Robot
         leftClaw  = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
         jewel = hardwareMap.get(Servo.class,"jewel");
-        relicWrist = hardwareMap.get(CRServo.class, "relicWrist");
+        relicWrist = hardwareMap.get(Servo.class, "relicWrist");
         relicClaw = hardwareMap.get(Servo.class, "relicClaw");
 
 
@@ -59,7 +55,6 @@ public class Robot
         motorRightBack.setDirection(DcMotor.Direction.FORWARD);
         motorLift.setDirection(DcMotor.Direction.FORWARD);
         relicArm.setDirection(DcMotor.Direction.FORWARD);
-        relicWrist.setDirection(CRServo.Direction.FORWARD);
 
         motorLeftFront.setPower(0);
         motorLeftBack.setPower(0);
@@ -67,7 +62,7 @@ public class Robot
         motorRightBack.setPower(0);
         motorLift.setPower(0);
         relicArm.setPower(0);
-        relicWrist.setPower(0);
+        //relicWrist.setPower(0);
 
     }
     public void mechanumDrive(double forward, double clockwise, double right){

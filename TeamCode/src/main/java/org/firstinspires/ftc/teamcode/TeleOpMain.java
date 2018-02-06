@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -14,8 +16,8 @@ public class TeleOpMain extends OpMode
     private Robot robot = new Robot();
     private ElapsedTime runtime = new ElapsedTime();
     private static final double liftPower = 1.0;
-    private static final double relicPower = 0.6;
-    private double wristPower = 0;
+    private static final double relicPower = 0.8;
+    private double direction = 1;
 
     @Override
     public void init() {
@@ -65,10 +67,10 @@ public class TeleOpMain extends OpMode
         }
 
         //Relic Arm
-        if(gamepad2.a){
+        if(gamepad1.a){
             robot.relicArm.setPower(relicPower);
         }
-        else if(gamepad2.b){
+        else if(gamepad1.b){
             robot.relicArm.setPower(-relicPower);
         }
         else{
@@ -76,26 +78,20 @@ public class TeleOpMain extends OpMode
         }
 
         //Relic Wrist
-        if(gamepad2.dpad_up){
-            robot.relicWrist.setPower(0.01);
-        }
-        else if(gamepad2.dpad_down){
-            robot.relicWrist.setPower(-0.01);
-        }
-        else{
-            robot.relicWrist.setPower(0);
-        }
+        robot.relicWrist.setPosition(robot.relicWrist.getPosition() + gamepad1.right_trigger * 0.0001);
+        robot.relicWrist.setPosition(robot.relicWrist.getPosition() - gamepad1.left_trigger * 0.0001);
+
 
         //Relic Claw
-        if(gamepad2.dpad_left){
+        if(gamepad1.right_bumper){
             robot.relicClaw.setPosition(0);
         }
 
-        if(gamepad2.dpad_right){
+        if(gamepad1.left_bumper){
             robot.relicClaw.setPosition(1);
         }
 
-        telemetry.addData("Power", robot.relicWrist.getPower());
+        telemetry.addData("Power", robot.relicWrist.getPosition());
         telemetry.update();
     }
 

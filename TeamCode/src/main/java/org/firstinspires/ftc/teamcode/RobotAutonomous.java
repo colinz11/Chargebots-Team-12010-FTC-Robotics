@@ -14,43 +14,32 @@ import com.qualcomm.robotcore.util.Range;
 
 public class RobotAutonomous
 {
-
     private ElapsedTime runtime = new ElapsedTime();
-
     private static final double     COUNTS_PER_MOTOR_REV    = 560 ;    // Andymark
     private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * Math.PI);
-
+    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
     private static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     private static final double     P_TURN_COEFF            = 0.05;     // Larger is more responsive, but also less stable
     private static final double     P_DRIVE_COEFF           = 0.10;     // Larger is more responsive, but also less stable
-
     private static final double     DRIVE_SPEED             = 0.2;
     private static final double     TURN_SPEED              = 0.1;
-
     private static final double JEWEL_POSITION = 0.95;
-    private static final double UP_RIGHT = 0.4;
-    private static final double JEWEL_TURN = 1.5;
-
+    private static final double UP_RIGHT = 0.5;
+    private static final double JEWEL_TURN = 3;
     private static final boolean bLedOn = true;
     private boolean jewelDone = true;
-
-
     /* Public OpMode members. */
-    DcMotor motorLeftFront = null;
-    DcMotor motorRightFront = null;
-    DcMotor motorLeftBack = null;
-    DcMotor motorRightBack = null;
-    DcMotor motorLift = null;
-    Servo leftClaw;
-    Servo rightClaw;
-    Servo jewel;
+    public DcMotor motorLeftFront = null;
+    public DcMotor motorRightFront = null;
+    public DcMotor motorLeftBack = null;
+    public DcMotor motorRightBack = null;
+    public DcMotor motorLift = null;
+    public Servo leftClaw;
+    public Servo rightClaw;
+    public Servo jewel;
     public ModernRoboticsI2cColorSensor colorSensor = null;
     public ModernRoboticsI2cGyro gyro = null;
-
-
     /* local OpMode members. */
     private HardwareMap hardwareMap = null;
     /* Initialize standard Hardware interfaces */
@@ -93,7 +82,6 @@ public class RobotAutonomous
         gyro.resetZAxisIntegrator();
         gyro.calibrate();
     }
-
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS){
@@ -230,7 +218,6 @@ public class RobotAutonomous
         motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
     /**
      *  Method to spin on central axis to point in a new direction.
      *  Move will stop if either of these conditions occur:
@@ -290,7 +277,6 @@ public class RobotAutonomous
 
         return onTarget;
     }
-
     /**
      * getError determines the error between the target angle and the robot's current heading
      * @param   targetAngle  Desired angle (relative to global reference established at last Gyro Reset).
@@ -307,7 +293,6 @@ public class RobotAutonomous
         while (robotError <= -180) robotError += 360;
         return robotError;
     }
-
     /**
      * returns desired steering force.  +/- 1 range.  +ve = steer left
      * @param error   Error angle in robot relative degrees
@@ -317,7 +302,6 @@ public class RobotAutonomous
     public double getSteer(double error, double PCoeff) {
         return Range.clip(error * PCoeff, -1, 1);
     }
-
     public void resetEncoders(){
         motorLeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -329,7 +313,6 @@ public class RobotAutonomous
         motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
     public void jewelRed(){
         jewel.setPosition(JEWEL_POSITION);
         leftClaw.setPosition(1);
@@ -348,7 +331,6 @@ public class RobotAutonomous
         }
         jewel.setPosition(UP_RIGHT);
     }
-
     public void jewelBlue(){
         jewel.setPosition(JEWEL_POSITION);
         leftClaw.setPosition(1);

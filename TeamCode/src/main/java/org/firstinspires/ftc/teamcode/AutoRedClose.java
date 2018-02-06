@@ -58,11 +58,7 @@ public class AutoRedClose extends LinearOpMode {
         }
 
         runtime.reset();
-        telemetry.addData("Blue",robot.colorSensor.blue());
-        telemetry.addData("Red",robot.colorSensor.red());
-        telemetry.addData(">", "Robot Heading = %d", robot.gyro.getIntegratedZValue());
-        telemetry.addData(">", "Press Play to start");
-        telemetry.update();
+
 
         waitForStart();
 
